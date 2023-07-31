@@ -1,0 +1,77 @@
+create table "user" (
+"id" uuid not null default uuid_generate_v4() primary key,
+"name" character varying not null,
+"address" character varying not null,
+"phone_number" character varying not null,
+"email" character varying not null,
+"password" character varying not null);
+
+
+create table "product" (
+"id" uuid not null default uuid_generate_v4() primary key,
+"name" character varying not null,
+"description" character varying not null,
+"price" character varying not null,
+"sku" character varying not null);
+
+create table "order" (
+"order_id" uuid not null default uuid_generate_v4() primary key,
+"placed_at" TIMESTAMP not null default now(),
+"order_user_id" character varying not null,
+"order_address" character varying not null);
+
+
+create table "order_details"(
+"order_id" character varying not null,
+"product_id" character varying not null,
+"product_price" character varying not null,
+"product_count" character varying not null)
+
+
+drop table order_details;
+
+INSERT INTO public."user"
+(id, "name", address, phone_number, email, "password")
+values
+(uuid_generate_v4(), 'Arya', 'DLF', '1234', 'arya@gmail.com', 'arya123'),
+(uuid_generate_v4(), 'Ann', 'Olive', '5674', 'ann@gmail.com', 'ann123'),
+(uuid_generate_v4(), 'Amy', 'Flair', '9783', 'amy@gmail.com', 'amy123');
+
+select * from "user";
+
+INSERT INTO public.product
+(id, "name", description, price, sku)
+values
+(uuid_generate_v4(), 'Colgate', 'No.1 Toothpaste', '40', '1'),
+(uuid_generate_v4(), 'Pears', 'Glycerin Soap', '45', '4'),
+(uuid_generate_v4(), 'Apple', 'Fresh fruit', '80', '9'),
+(uuid_generate_v4(), 'Jeans', 'Womens Wear', '1000', '16'),
+(uuid_generate_v4(), 'Pen', 'School Stationary', '10', '23');
+
+select * from product;
+
+INSERT INTO public."order"
+(order_id, placed_at, order_user_id, order_address)
+values
+(uuid_generate_v4(), now(), '130b2231-1947-4ee0-a87f-be7005801799', 'Nila'),
+(uuid_generate_v4(), now(), '51d6aeb7-dbe8-4caa-ba22-691adc0e1f3c', 'Smartcity'),
+(uuid_generate_v4(), now(), 'f17eb45c-ea98-4168-8f7d-ee42cb69453a', 'Edachira'),
+(uuid_generate_v4(), now(), '130b2231-1947-4ee0-a87f-be7005801799', 'Phase1'),
+(uuid_generate_v4(), now(), '51d6aeb7-dbe8-4caa-ba22-691adc0e1f3c', 'Phase2');
+
+select * from "order";
+
+INSERT INTO public.order_details
+(order_id, product_id, product_price, product_count)
+values
+('e843dd6a-64f5-47c2-a9b2-c3f6ccbefc3e', 'da83dd88-c71b-404a-8579-08cc95b21ab3', '35', '2'),
+('e843dd6a-64f5-47c2-a9b2-c3f6ccbefc3e', 'aac75d80-f636-4ff3-a2a1-744595fa4885', '10', '5'),
+('82ddf5cc-083d-4d72-a19b-e77a4dab4434', 'd650cb0f-d00a-4bec-b547-6cd8dcd89bb6', '950', '1'),
+('34af43a5-ce65-4252-ad39-117d6dfb7cca', 'ed9c00a5-54e7-4359-b551-bd376b653ba8', '80', '2'),
+('caeb8c8f-ef91-4d97-9714-c666c9e55bb9', '028d7627-628f-4ce0-8a83-08bf38032ed1', '45', '3'),
+('caeb8c8f-ef91-4d97-9714-c666c9e55bb9', 'da83dd88-c71b-404a-8579-08cc95b21ab3', '40', '5'),
+('99dc2a93-19df-4c29-8718-d86e86748d15', '028d7627-628f-4ce0-8a83-08bf38032ed1', '40', '3');
+
+
+select * from order_details ;
+create index order_name on product("name");
