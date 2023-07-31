@@ -27,9 +27,6 @@ create table "order_details"(
 "product_price" character varying not null,
 "product_count" character varying not null)
 
-
-drop table order_details;
-
 INSERT INTO public."user"
 (id, "name", address, phone_number, email, "password")
 values
